@@ -1,0 +1,55 @@
+
+import mongoose from "mongoose";
+
+const courseSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    description: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    type: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    categoryId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+
+    imageUrl: {
+      type: String,
+      default: "",
+    },
+
+    imagePublicId: {
+      type: String,
+      default: "",
+    },
+
+    syllabusUrl: {
+      type: String,
+      default: "",
+    },
+
+    syllabusPublicId: {
+      type: String,
+      default: "",
+    },
+
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Course = mongoose.model("Course", courseSchema);
+
+export default Course;
