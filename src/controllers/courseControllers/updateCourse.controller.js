@@ -4,16 +4,18 @@ import updateCourseService from "../../services/courseService/updateCourse.servi
 const updateCourse = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, type, categoryId } = req.body;
+    const { title, description, Originalprice,discountPrice,duration,type, categoryId } = req.body;
 
     const updateData = {};
 
     if (title !== undefined) updateData.title = title.trim();
     if (description !== undefined) updateData.description = description.trim();
     if (type !== undefined) updateData.type = type.trim();
+    if (Originalprice !== undefined) updateData.Originalprice = Originalprice.trim();
+    if (discountPrice !== undefined) updateData.discountPrice = discountPrice.trim();
+    if (duration !== undefined) updateData.duration = duration.trim();
     if (categoryId !== undefined) updateData.categoryId = categoryId;
 
-    // Read optional uploaded files
     const image = req.files?.image?.[0];
     const syllabus = req.files?.syllabus?.[0];
 

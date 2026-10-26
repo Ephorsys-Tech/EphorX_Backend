@@ -3,18 +3,32 @@ import createCourseService from "../../services/courseService/createCourse.servi
 
 const createCourse = async (req, res) => {
   try {
-    const { title, description, type, categoryId } = req.body;
-
-    const image = req.files?.image?.[0];
-    const syllabus = req.files?.syllabus?.[0];
-
-    const course = await createCourseService({
+    const {
       title,
       description,
       type,
       categoryId,
-    },
-      image, syllabus);
+      Originalprice,
+      discountPrice,
+      duration,
+    } = req.body;
+
+    const image = req.files?.image?.[0];
+    const syllabus = req.files?.syllabus?.[0];
+
+    const course = await createCourseService(
+      {
+        title,
+        description,
+        type,
+        Originalprice,
+        discountPrice,
+        duration,
+        categoryId,
+      },
+      image,
+      syllabus
+    );
 
     return res.status(201).json({
       success: true,
@@ -26,7 +40,7 @@ const createCourse = async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      message: "Internal server error.",
+      message: error.message || "Internal server error.",
     });
   }
 };

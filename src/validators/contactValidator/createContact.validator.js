@@ -1,5 +1,5 @@
 const validateContact = (req, res, next) => {
-  const { name, email, phone,whatsApp, message } = req.body;
+  const { name, email, phone,course,whatsApp, message } = req.body;
 
   if (
     typeof name !== "string" ||
@@ -7,11 +7,13 @@ const validateContact = (req, res, next) => {
     typeof email !== "string" ||
     !email.trim() ||
     typeof message !== "string" ||
+    !message.trim()||
+    typeof course !== "string" ||
     !message.trim()
   ) {
     return res.status(400).json({
       success: false,
-      message: "Name, email, and message are required.",
+      message: "Name, email, course and message are required.",
     });
   }
 

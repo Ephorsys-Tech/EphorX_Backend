@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const contactSchema = new mongoose.Schema(
   {
@@ -18,14 +18,26 @@ const contactSchema = new mongoose.Schema(
     phone: {
       type: String,
       trim: true,
-      maxlength: 10,
+      maxlength: 20,
       default: "",
     },
     whatsApp: {
       type: String,
       trim: true,
-      maxlength: 10,
+      maxlength: 20,
       default: "",
+    },
+    course: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 200,
+    },
+    subject: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 200,
     },
     message: {
       type: String,
@@ -36,7 +48,6 @@ const contactSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
 
 const Contact = mongoose.model("Contact", contactSchema);
 
