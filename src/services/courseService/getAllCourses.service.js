@@ -1,4 +1,3 @@
-
 import Course from "../../model/course.model.js";
 
 const getAllCoursesService = async () => {

@@ -20,16 +20,19 @@ const fileFilter = (req, file, cb) => {
     return cb(new Error("Syllabus must be a PDF file."));
   }
 
-  return cb(new Error("Unexpected file field."));
+  return cb(new Error(`Unexpected file field: ${file.fieldname}`));
 };
 
 const courseUpload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 10 * 1024 * 1024, // 10 MB per file
+    fileSize: 10 * 1024 * 1024,
     files: 2,
   },
-});
+}).fields([
+  { name: "image", maxCount: 1 },
+  { name: "syllabus", maxCount: 1 },
+]);
 
 export default courseUpload;

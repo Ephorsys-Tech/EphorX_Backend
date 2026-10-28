@@ -61,7 +61,7 @@ const forgotPasswordService = async (email) => {
     try {
         await sendEmail({
             to: admin.email,
-            subject: "HRMS Password Reset OTP",
+            subject: "EPhorX Password Reset OTP",
             html: `
                 <div style="font-family: Arial, sans-serif;">
                     <h2>Password Reset</h2>

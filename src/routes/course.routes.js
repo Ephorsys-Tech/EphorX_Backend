@@ -1,3 +1,4 @@
+
 import express from "express";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
@@ -16,25 +17,34 @@ import courseUpload from "../middleware/courseUpload.middleware.js";
 
 const router = express.Router();
 
-router.use(authMiddleware)
+router.use(authMiddleware);
 
-router.post("/create-course",
-    courseUpload.fields([
-        { name: "image", maxCount: 1 },
-        { name: "syllabus", maxCount: 1 },
-    ]),
-    createCourseValidator, createCourse);
+router.post(
+  "/create-course",
+  courseUpload,
+  createCourseValidator,
+  createCourse
+);
 
-router.get("/getAllCourses", getAllCourses)
-router.get("/get-course-id/:id", getCourseByIdValidator, getCourseById)
+router.get("/getAllCourses", getAllCourses);
 
-router.patch("/update-course/:id",
-    courseUpload.fields([
-        { name: "image", maxCount: 1 },
-        { name: "syllabus", maxCount: 1 },
-    ]),
-    updateCourseValidator, updateCourse);
-    
-router.delete("/delete-course/:id", deleteCourseValidator, deleteCourse)
+router.get(
+  "/get-course-id/:id",
+  getCourseByIdValidator,
+  getCourseById
+);
+
+router.patch(
+  "/update-course/:id",
+  courseUpload,
+  updateCourseValidator,
+  updateCourse
+);
+
+router.delete(
+  "/delete-course/:id",
+  deleteCourseValidator,
+  deleteCourse
+);
 
 export default router;
