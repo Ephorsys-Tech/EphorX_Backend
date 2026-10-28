@@ -17,34 +17,17 @@ import courseUpload from "../middleware/courseUpload.middleware.js";
 
 const router = express.Router();
 
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
 router.post(
-  "/create-course",
-  courseUpload,
-  createCourseValidator,
-  createCourse
-);
+  "/create-course",authMiddleware,courseUpload,createCourseValidator,createCourse);
 
 router.get("/getAllCourses", getAllCourses);
 
-router.get(
-  "/get-course-id/:id",
-  getCourseByIdValidator,
-  getCourseById
-);
+router.get("/get-course-id/:id",getCourseByIdValidator,getCourseById);
 
-router.patch(
-  "/update-course/:id",
-  courseUpload,
-  updateCourseValidator,
-  updateCourse
-);
+router.patch("/update-course/:id",authMiddleware,courseUpload,updateCourseValidator,updateCourse);
 
-router.delete(
-  "/delete-course/:id",
-  deleteCourseValidator,
-  deleteCourse
-);
+router.delete("/delete-course/:id",authMiddleware,deleteCourseValidator,deleteCourse);
 
 export default router;
