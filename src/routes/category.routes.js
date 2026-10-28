@@ -19,13 +19,13 @@ import getCoursesByCategory from "../controllers/courseControllers/getCourseByCa
 
 const router = express.Router();
 
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
-router.post("/create-category", createCategoryValidator, createCategory);
+router.post("/create-category",authMiddleware, createCategoryValidator, createCategory);
 router.get("/get-all",getAllCategories);
 router.get("/getById/:id", getCategoryByIdValidator, getCategoryById);
-router.patch("/update/:id", updateCategoryValidator, updateCategory);
-router.delete("/delete/:id", deleteCategoryValidator, deleteCategory);
+router.patch("/update/:id",authMiddleware, updateCategoryValidator, updateCategory);
+router.delete("/delete/:id", authMiddleware, deleteCategoryValidator, deleteCategory);
 
 router.get("/get-course/:id/courses", getCoursesByCategoryValidator, getCoursesByCategory);
 
