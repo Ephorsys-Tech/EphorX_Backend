@@ -1,6 +1,5 @@
 import getTrainerById from "../../services/trainerServices/getTrainerById.service.js";
 
-
 const getTrainerByIdController = async (req, res) => {
   try {
     const { id } = req.params;
@@ -8,14 +7,6 @@ const getTrainerByIdController = async (req, res) => {
     const trainer = await getTrainerById(id);
 
     if (!trainer) {
-      return res.status(404).json({
-        success: false,
-        message: "Trainer not found",
-      });
-    }
-
-    // Public API: only return published trainers
-    if (trainer.status !== "published") {
       return res.status(404).json({
         success: false,
         message: "Trainer not found",

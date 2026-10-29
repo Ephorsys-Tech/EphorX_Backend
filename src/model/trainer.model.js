@@ -1,4 +1,3 @@
-
 import mongoose from "mongoose";
 
 const trainerSchema = new mongoose.Schema(
@@ -53,14 +52,7 @@ const trainerSchema = new mongoose.Schema(
     detailsUrl: {
       type: String,
       default: null,
-    },
-
-    // Controls whether the card is displayed
-    status: {
-      type: String,
-      enum: ["draft", "published"],
-      default: "draft",
-    },
+    }
   },
   {
     timestamps: true,

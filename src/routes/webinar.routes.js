@@ -12,10 +12,19 @@ import webinarUpload from "../middleware/webinarUpload.middleware.js";
 
 const router = express.Router();
 
-router.post("/create-webinar", webinarUpload,validateCreateWebinar, createWebinar);
+router.post("/create-webinar", webinarUpload,
+                               validateCreateWebinar, 
+                               createWebinar);
+
 router.get("/get-all-webinar", getAllWebinarsController);
+
 router.get("/get-webinar/:id",webinarIdValidator,getWebinarByIdController);
-router.patch("/update-webinar/:id",webinarUpload,webinarIdValidator,updateWebinarValidator,updateWebinarController);
+
+router.patch("/update-webinar/:id",webinarUpload,
+                                   webinarIdValidator,
+                                   updateWebinarValidator,
+                                   updateWebinarController);
+                                   
 router.delete("/delete-webinar/:id",webinarIdValidator,deleteWebinarController);
 
 export default router;

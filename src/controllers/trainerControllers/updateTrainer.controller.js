@@ -1,4 +1,3 @@
-
 import updateTrainer from "../../services/trainerServices/updateTrainer.service.js";
 import cloudinary from "../../config/cloudinary.js";
 
@@ -10,7 +9,10 @@ const uploadToCloudinary = (buffer) => {
         resource_type: "image",
       },
       (error, result) => {
-        if (error) return reject(error);
+        if (error) {
+          return reject(error);
+        }
+
         resolve(result);
       }
     );
@@ -26,22 +28,29 @@ const updateTrainerController = async (req, res) => {
     const { id } = req.params;
     const updates = { ...req.body };
 
-    // Convert experienceYears from form-data string to number
+    // Status is no longer part of the trainer model.
+    delete updates.status;
+
+    // Validate and convert experienceYears.
     if (updates.experienceYears !== undefined) {
-      updates.experienceYears = Number(updates.experienceYears);
+      const rawValue = updates.experienceYears;
+      const years = Number(rawValue);
 
       if (
-        !Number.isFinite(updates.experienceYears) ||
-        updates.experienceYears < 0
+        String(rawValue).trim() === "" ||
+        !Number.isFinite(years) ||
+        years < 0
       ) {
         return res.status(400).json({
           success: false,
           message: "Experience years must be a non-negative number",
         });
       }
+
+      updates.experienceYears = years;
     }
 
-    // Upload a replacement avatar if provided
+    // Upload a replacement avatar when provided.
     if (req.file) {
       const result = await uploadToCloudinary(req.file.buffer);
 
@@ -53,6 +62,7 @@ const updateTrainerController = async (req, res) => {
     const trainer = await updateTrainer(id, updates);
 
     if (!trainer) {
+      // Remove the newly uploaded image if the trainer doesn't exist.
       if (newPublicId) {
         await cloudinary.uploader.destroy(newPublicId).catch(() => {});
       }
@@ -63,14 +73,19 @@ const updateTrainerController = async (req, res) => {
       });
     }
 
-    // Delete the previous image only after a successful update.
-    // Requires the service to return the previous public ID.
-    if (newPublicId && trainer.previousAvatarPublicId) {
-      await cloudinary.uploader
-        .destroy(trainer.previousAvatarPublicId)
-        .catch((error) => {
-          console.error("Old avatar cleanup error:", error);
-        });
+    // Delete the old avatar only after the database update succeeds.
+    if (
+      newPublicId &&
+      trainer.previousAvatarPublicId &&
+      trainer.previousAvatarPublicId !== newPublicId
+    ) {
+      try {
+        await cloudinary.uploader.destroy(
+          trainer.previousAvatarPublicId
+        );
+      } catch (error) {
+        console.error("Old avatar cleanup error:", error);
+      }
     }
 
     return res.status(200).json({
@@ -79,13 +94,17 @@ const updateTrainerController = async (req, res) => {
       data: trainer,
     });
   } catch (error) {
+    // Clean up the new upload if the update fails.
     if (newPublicId) {
       await cloudinary.uploader.destroy(newPublicId).catch(() => {});
     }
 
     console.error("Update trainer error:", error);
 
-    if (error.name === "ValidationError" || error.name === "CastError") {
+    if (
+      error.name === "ValidationError" ||
+      error.name === "CastError"
+    ) {
       return res.status(400).json({
         success: false,
         message: error.message,

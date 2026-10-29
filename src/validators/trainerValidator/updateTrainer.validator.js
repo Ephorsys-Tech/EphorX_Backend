@@ -1,4 +1,3 @@
-
 const updateTrainerValidator = (req, res, next) => {
   const allowedFields = [
     "name",
@@ -7,12 +6,11 @@ const updateTrainerValidator = (req, res, next) => {
     "specialization",
     "description",
     "experienceYears",
-    "status",
+    "detailsUrl",
   ];
 
-  const updates = Object.keys(req.body);
+  const updates = Object.keys(req.body || {});
 
-  // A PATCH request can update either text fields or an uploaded file.
   if (updates.length === 0 && !req.file) {
     return res.status(400).json({
       success: false,
@@ -37,6 +35,7 @@ const updateTrainerValidator = (req, res, next) => {
     "category",
     "specialization",
     "description",
+    "detailsUrl",
   ];
 
   for (const field of stringFields) {
@@ -51,7 +50,6 @@ const updateTrainerValidator = (req, res, next) => {
     }
   }
 
-  // Multipart form-data values arrive as strings.
   if (req.body.experienceYears !== undefined) {
     const rawValue = req.body.experienceYears;
     const years = Number(rawValue);
@@ -67,18 +65,7 @@ const updateTrainerValidator = (req, res, next) => {
       });
     }
 
-    // Replace the string with a number for the controller/service.
     req.body.experienceYears = years;
-  }
-
-  if (
-    req.body.status !== undefined &&
-    !["draft", "published"].includes(req.body.status)
-  ) {
-    return res.status(400).json({
-      success: false,
-      message: "Status must be either draft or published",
-    });
   }
 
   next();
