@@ -7,14 +7,15 @@ import getWebinarByIdController from "../controllers/webinarControllers/getWebin
 import updateWebinarController from "../controllers/webinarControllers/updateWebinar.controller.js";
 import updateWebinarValidator from "../validators/webinarValidator/updateWebinar.validator.js";
 import deleteWebinarController from "../controllers/webinarControllers/deleteWebinar.controller.js";
+import webinarUpload from "../middleware/webinarUpload.middleware.js";
 
 
 const router = express.Router();
 
-router.post("/create-webinar", validateCreateWebinar, createWebinar);
+router.post("/create-webinar", webinarUpload,validateCreateWebinar, createWebinar);
 router.get("/get-all-webinar", getAllWebinarsController);
 router.get("/get-webinar/:id",webinarIdValidator,getWebinarByIdController);
-router.patch("/update-webinar/:id",webinarIdValidator,updateWebinarValidator,updateWebinarController);
+router.patch("/update-webinar/:id",webinarUpload,webinarIdValidator,updateWebinarValidator,updateWebinarController);
 router.delete("/delete-webinar/:id",webinarIdValidator,deleteWebinarController);
 
 export default router;

@@ -7,17 +7,19 @@ const createTrainerValidator = (req, res, next) => {
     specialization,
     description,
     experienceYears,
+    status,
   } = req.body;
 
-  // Check required fields
+  // Check required text fields
   if (
-    !name ||
-    !designation ||
-    !category ||
-    !specialization ||
-    !description ||
+    !name?.trim() ||
+    !designation?.trim() ||
+    !category?.trim() ||
+    !specialization?.trim() ||
+    !description?.trim() ||
     experienceYears === undefined ||
-    experienceYears === null
+    experienceYears === null ||
+    experienceYears === ""
   ) {
     return res.status(400).json({
       success: false,
@@ -25,26 +27,10 @@ const createTrainerValidator = (req, res, next) => {
     });
   }
 
-  // Validate string fields
-  if (
-    typeof name !== "string" ||
-    typeof designation !== "string" ||
-    typeof category !== "string" ||
-    typeof specialization !== "string" ||
-    typeof description !== "string"
-  ) {
-    return res.status(400).json({
-      success: false,
-      message: "Trainer text fields must be strings",
-    });
-  }
+  // Convert form-data string to number
+  const years = Number(experienceYears);
 
-  // Validate experience
-  if (
-    typeof experienceYears !== "number" ||
-    !Number.isFinite(experienceYears) ||
-    experienceYears < 0
-  ) {
+  if (!Number.isFinite(years) || years < 0) {
     return res.status(400).json({
       success: false,
       message: "Experience years must be a non-negative number",
@@ -53,14 +39,17 @@ const createTrainerValidator = (req, res, next) => {
 
   // Validate optional status
   if (
-    req.body.status !== undefined &&
-    !["draft", "published"].includes(req.body.status)
+    status !== undefined &&
+    !["draft", "published"].includes(status)
   ) {
     return res.status(400).json({
       success: false,
       message: "Status must be draft or published",
     });
   }
+
+  // Make the converted number available to the controller
+  req.body.experienceYears = years;
 
   next();
 };

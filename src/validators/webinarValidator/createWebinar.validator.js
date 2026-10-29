@@ -1,4 +1,21 @@
+
 export const validateCreateWebinar = (req, res, next) => {
+  // Convert multipart form-data values
+  if (req.body.duration !== undefined) {
+    req.body.duration = Number(req.body.duration);
+  }
+
+  if (req.body.instructor && typeof req.body.instructor === "string") {
+    try {
+      req.body.instructor = JSON.parse(req.body.instructor);
+    } catch {
+      return res.status(400).json({
+        success: false,
+        message: "Instructor must contain valid JSON",
+      });
+    }
+  }
+
   const {
     title,
     description,
@@ -18,7 +35,8 @@ export const validateCreateWebinar = (req, res, next) => {
     !description ||
     !category ||
     !type ||
-    !duration ||
+    req.body.duration === undefined ||
+    req.body.duration === "" ||
     !instructor
   ) {
     return res.status(400).json({
@@ -43,6 +61,14 @@ export const validateCreateWebinar = (req, res, next) => {
     return res.status(400).json({
       success: false,
       message: "Description must contain at least 10 characters",
+    });
+  }
+
+  // Validate category
+  if (typeof category !== "string" || !category.trim()) {
+    return res.status(400).json({
+      success: false,
+      message: "Category is required",
     });
   }
 

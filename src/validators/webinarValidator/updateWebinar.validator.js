@@ -32,13 +32,18 @@ const updateWebinarValidator = (req, res, next) => {
 
   const requestFields = Object.keys(req.body);
 
-  if (requestFields.length === 0) {
+  const hasBodyFields = Object.keys(req.body).length > 0;
+
+  const hasUploadedFiles =
+    (req.files?.thumbnail?.length ?? 0) > 0 ||
+    (req.files?.instructorAvatar?.length ?? 0) > 0;
+
+  if (!hasBodyFields && !hasUploadedFiles) {
     return res.status(400).json({
       success: false,
       message: "Please provide at least one field to update",
     });
   }
-
   const invalidFields = requestFields.filter(
     (field) => !allowedFields.includes(field)
   );

@@ -21,9 +21,9 @@ const trainerSchema = new mongoose.Schema(
       default: null,
     },
     avatarPublicId: {
-  type: String,
-  default: null,
-},
+      type: String,
+      default: null,
+    },
 
     // Shown in the hover section
     category: {
@@ -48,13 +48,6 @@ const trainerSchema = new mongoose.Schema(
       type: Number,
       required: true,
       min: 0,
-    },
-
-    // Optional button on hover
-    buttonText: {
-      type: String,
-      default: "View Details",
-      trim: true,
     },
 
     detailsUrl: {

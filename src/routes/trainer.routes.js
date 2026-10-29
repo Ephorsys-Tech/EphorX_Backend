@@ -12,14 +12,25 @@ import updateTrainerValidator from "../validators/trainerValidator/updateTrainer
 
 import updateTrainerController from "../controllers/trainerControllers/updateTrainer.controller.js";
 import deleteTrainerController from "../controllers/trainerControllers/deleteTrainer.controller.js";
+import trainerUpload from "../middleware/trainerUpload.middleware.js";
 
 
 const router = express.Router();
 
-router.post( "/create-trainer",createTrainerValidator,createTrainerController);
+router.post("/create-trainer",trainerUpload,
+                              createTrainerValidator,
+                              createTrainerController);
+
 router.get("/get-all-trainers", getAllTrainersController);
-router.get("/get-trainer/:id", trainerIdValidator, getTrainerByIdController);
-router.patch("/update-trainer/:id",updateTrainerValidator,updateTrainerController);
-router.delete("/delete-trainer/:id",trainerIdValidator,deleteTrainerController);
+
+router.get("/get-trainer/:id", trainerIdValidator, 
+                               getTrainerByIdController);
+
+router.patch("/update-trainer/:id",trainerUpload,
+                                  updateTrainerValidator,
+                                  updateTrainerController);
+
+router.delete("/delete-trainer/:id",trainerIdValidator,
+                                    deleteTrainerController);
 
 export default router;

@@ -26,6 +26,10 @@ const webinarSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    thumbnailPublicId: {
+      type: String,
+      default: null,
+    },
     date: {
       type: Date,
       default: null,
@@ -60,6 +64,10 @@ const webinarSchema = new mongoose.Schema(
         trim: true,
       },
       avatar: {
+        type: String,
+        default: null,
+      },
+      avatarPublicId: {
         type: String,
         default: null,
       },

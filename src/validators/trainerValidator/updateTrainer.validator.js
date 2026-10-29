@@ -1,20 +1,19 @@
+
 const updateTrainerValidator = (req, res, next) => {
   const allowedFields = [
     "name",
     "designation",
-    "avatar",
     "category",
     "specialization",
     "description",
     "experienceYears",
-    "buttonText",
-    "detailsUrl",
-    "status"
+    "status",
   ];
 
   const updates = Object.keys(req.body);
 
-  if (updates.length === 0) {
+  // A PATCH request can update either text fields or an uploaded file.
+  if (updates.length === 0 && !req.file) {
     return res.status(400).json({
       success: false,
       message: "Please provide at least one field to update",
@@ -38,15 +37,11 @@ const updateTrainerValidator = (req, res, next) => {
     "category",
     "specialization",
     "description",
-    "avatar",
-    "buttonText",
-    "detailsUrl",
   ];
 
   for (const field of stringFields) {
     if (
       req.body[field] !== undefined &&
-      req.body[field] !== null &&
       typeof req.body[field] !== "string"
     ) {
       return res.status(400).json({
@@ -56,18 +51,24 @@ const updateTrainerValidator = (req, res, next) => {
     }
   }
 
-  if (
-    req.body.experienceYears !== undefined &&
-    (
-      typeof req.body.experienceYears !== "number" ||
-      !Number.isFinite(req.body.experienceYears) ||
-      req.body.experienceYears < 0
-    )
-  ) {
-    return res.status(400).json({
-      success: false,
-      message: "Experience years must be a non-negative number",
-    });
+  // Multipart form-data values arrive as strings.
+  if (req.body.experienceYears !== undefined) {
+    const rawValue = req.body.experienceYears;
+    const years = Number(rawValue);
+
+    if (
+      String(rawValue).trim() === "" ||
+      !Number.isFinite(years) ||
+      years < 0
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Experience years must be a non-negative number",
+      });
+    }
+
+    // Replace the string with a number for the controller/service.
+    req.body.experienceYears = years;
   }
 
   if (
@@ -76,7 +77,7 @@ const updateTrainerValidator = (req, res, next) => {
   ) {
     return res.status(400).json({
       success: false,
-      message: "Status must be draft or published",
+      message: "Status must be either draft or published",
     });
   }
 
