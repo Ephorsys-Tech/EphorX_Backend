@@ -5,6 +5,8 @@ import categoryRoutes from "../routes/category.routes.js"
 import contactRoutes from "../routes/contact.routes.js"
 import webinarRoutes from "../routes/webinar.routes.js"
 import trainerRoutes from "../routes/trainer.routes.js"
+import webinarEnrollRoutes from "../routes/webinarEnroll.routes.js"
+import courseEnrollRoutes from "../routes/courseEnroll.routes.js"
 
 const router = express.Router();
 
@@ -17,6 +19,8 @@ router.use("/category",categoryRoutes);
 router.use("/contact",contactRoutes);
 router.use("/webinars",webinarRoutes);
 router.use("/trainer",trainerRoutes);
+router.use("/webinarEnroll",webinarEnrollRoutes);
+router.use("/courseEnroll",courseEnrollRoutes)
 
 
 export default router;
