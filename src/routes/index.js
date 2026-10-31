@@ -7,6 +7,9 @@ import webinarRoutes from "../routes/webinar.routes.js"
 import trainerRoutes from "../routes/trainer.routes.js"
 import webinarEnrollRoutes from "../routes/webinarEnroll.routes.js"
 import courseEnrollRoutes from "../routes/courseEnroll.routes.js"
+import DemoBookingRoutes from "../routes/demoBooking.routes.js";
+import syllabusLeadRoutes from "../routes/syllabusLead.routes.js"
+import JobRoutes from "../routes/job.routes.js"
 
 const router = express.Router();
 
@@ -20,7 +23,10 @@ router.use("/contact",contactRoutes);
 router.use("/webinars",webinarRoutes);
 router.use("/trainer",trainerRoutes);
 router.use("/webinarEnroll",webinarEnrollRoutes);
-router.use("/courseEnroll",courseEnrollRoutes)
+router.use("/courseEnroll",courseEnrollRoutes);
+router.use("/book-demo",DemoBookingRoutes);
+router.use("/syllabus-lead",syllabusLeadRoutes);
+router.use("/job",JobRoutes)
 
 
 export default router;

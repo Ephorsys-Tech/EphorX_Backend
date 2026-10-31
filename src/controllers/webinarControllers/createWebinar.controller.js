@@ -1,6 +1,6 @@
 
-import { createWebinarService } from "../../services/webinarServices/createWebinar.service.js";
 import cloudinary from "../../config/cloudinary.js";
+import { createWebinarService } from "../../services/webinarServices/createWebinar.service.js";
 
 const uploadImage = (buffer) =>
   new Promise((resolve, reject) => {
