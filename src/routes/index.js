@@ -10,6 +10,7 @@ import courseEnrollRoutes from "../routes/courseEnroll.routes.js"
 import DemoBookingRoutes from "../routes/demoBooking.routes.js";
 import syllabusLeadRoutes from "../routes/syllabusLead.routes.js"
 import JobRoutes from "../routes/job.routes.js"
+import JobApplyRoutes from "../routes/jobApply.routes.js"
 
 const router = express.Router();
 
@@ -26,7 +27,8 @@ router.use("/webinarEnroll",webinarEnrollRoutes);
 router.use("/courseEnroll",courseEnrollRoutes);
 router.use("/book-demo",DemoBookingRoutes);
 router.use("/syllabus-lead",syllabusLeadRoutes);
-router.use("/job",JobRoutes)
+router.use("/job",JobRoutes);
+router.use("/job-apply",JobApplyRoutes)
 
 
 export default router;

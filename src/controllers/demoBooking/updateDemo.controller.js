@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import updateDemoBooking from "../../services/demoBooking/updateDemo.service.js"
+import updateDemoBooking from "../../services/demoBooking/updateDemo.service.js";
 
 const updateDemoBookingController = async (req, res) => {
   const errors = validationResult(req);
@@ -12,6 +12,9 @@ const updateDemoBookingController = async (req, res) => {
   }
 
   try {
+    console.log("Demo Booking ID:", req.params.id);
+    console.log("Update Request Body:", req.body);
+
     const booking = await updateDemoBooking(
       req.params.id,
       req.body
@@ -30,9 +33,9 @@ const updateDemoBookingController = async (req, res) => {
       booking,
     });
   } catch (error) {
-    const status = error.message === "Selected course not found" ? 404 : 500;
+    console.error("Update Demo Booking Error:", error);
 
-    return res.status(status).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
