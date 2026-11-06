@@ -11,6 +11,8 @@ import DemoBookingRoutes from "../routes/demoBooking.routes.js";
 import syllabusLeadRoutes from "../routes/syllabusLead.routes.js"
 import JobRoutes from "../routes/job.routes.js"
 import JobApplyRoutes from "../routes/jobApply.routes.js"
+import CollegeTieUpRoutes from "../routes/collegeTieUp.routes.js"
+import CampaignRoutes from "../routes/campaign.routes.js"
 
 const router = express.Router();
 
@@ -28,7 +30,9 @@ router.use("/courseEnroll",courseEnrollRoutes);
 router.use("/book-demo",DemoBookingRoutes);
 router.use("/syllabus-lead",syllabusLeadRoutes);
 router.use("/job",JobRoutes);
-router.use("/job-apply",JobApplyRoutes)
+router.use("/job-apply",JobApplyRoutes);
+router.use("/college-tie-up",CollegeTieUpRoutes);
+router.use("/campaign",CampaignRoutes);
 
 
 export default router;
