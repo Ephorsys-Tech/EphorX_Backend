@@ -1,7 +1,8 @@
 import crypto from "crypto";
 import Admin from "../../model/admin.model.js";
 import ApiError from "../../utils/ApiError.js";
-import sendEmail from "../../utils/SendEmail.js";
+import sendEmail from "../../utils/sendEmail.js";
+
 
 const forgotPasswordService = async (email) => {
     const normalizedEmail = email?.trim().toLowerCase();
