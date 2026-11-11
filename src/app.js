@@ -12,8 +12,7 @@ const app = express();
 const allowedOrigins = [
     "http://localhost:5173",
     "http://localhost:4173",
-    "https://saverasurgicalgroup.com",
-    "https://www.saverasurgicalgroup.com",
+    "https://ephor-x-frontend.vercel.app",
 ];
 
 app.use(
@@ -46,7 +45,7 @@ app.use(morgan("dev"));
 
 // app.use("/api/v1", router);
 
-app.use("/api/auth",router);
+app.use("/api/auth", router);
 
 
 export default app;
