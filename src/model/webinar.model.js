@@ -19,7 +19,7 @@ const webinarSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["live", "pre-recorded"],
+      enum: ["live"],
       required: true,
     },
     thumbnail: {
