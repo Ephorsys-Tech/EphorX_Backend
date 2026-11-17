@@ -1,30 +1,23 @@
+
 import "dotenv/config";
-import dotenv from "dotenv";
-dotenv.config();
 
 import dns from "dns";
 import http from "http";
 
 import app from "./src/app.js";
-
 import { Server } from "socket.io";
 import connectToDb from "./src/db/db.js";
-// ======================================================
-// DNS
-// ======================================================
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
-// ======================================================
-// PORT
-// ======================================================
-const PORT = process.env.PORT || 5500;
-// ======================================================
-// HTTP SERVER
-// ======================================================
-const server = http.createServer(app);
-// ======================================================
-// SOCKET IO
-// ======================================================
 
+// DNS Configuration
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
+// PORT
+const PORT = process.env.PORT || 5500;
+
+// HTTP Server
+const server = http.createServer(app);
+
+// SOCKET.IO
 export const io = new Server(server, {
     cors: {
         origin: [
@@ -35,22 +28,16 @@ export const io = new Server(server, {
     },
 });
 
-// ======================================================
 // SOCKET CONNECTION
-// ======================================================
-
 io.on("connection", (socket) => {
-    console.log("Socket Connected :", socket.id);
+    console.log("Socket Connected:", socket.id);
 
     socket.on("disconnect", () => {
-        console.log("Socket Disconnected :", socket.id);
+        console.log("Socket Disconnected:", socket.id);
     });
 });
 
-// ======================================================
 // START SERVER
-// ======================================================
-
 const startServer = async () => {
     try {
         await connectToDb();
@@ -60,8 +47,7 @@ const startServer = async () => {
         });
 
     } catch (error) {
-        console.error("Server startup failed:", error);
-
+        console.error("Server startup failed:", error.message);
         process.exit(1);
     }
 };
