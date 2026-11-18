@@ -3,11 +3,10 @@ import jwt from "jsonwebtoken";
 import Admin from "../../model/admin.model.js";
 
 const loginService = async ({ email, password }) => {
-
   // Find admin by email
-  const admin = await Admin.findOne({ 
-    email: email.trim().toLowerCase()
-   }).select("+password");
+  const admin = await Admin.findOne({
+    email: email.trim().toLowerCase(),
+  }).select("+password");
 
   if (!admin) {
     const error = new Error("Invalid email or password.");
@@ -45,7 +44,7 @@ const loginService = async ({ email, password }) => {
     }
   );
 
-  // Never return the password
+  // Return token and admin details
   return {
     token,
     admin: {

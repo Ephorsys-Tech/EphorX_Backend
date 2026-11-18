@@ -23,12 +23,21 @@ const adminLogin = async (req, res) => {
       password,
     });
 
+    // Set JWT in HTTP-only cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000,
+      path: "/",
+    });
+
     return res.status(200).json({
       success: true,
       message: "Login successful.",
-      token,
-      user: admin,
+      admin,
     });
+
   } catch (error) {
     if (error.statusCode) {
       return res.status(error.statusCode).json({
