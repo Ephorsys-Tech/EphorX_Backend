@@ -3,18 +3,15 @@ const createTrainerValidator = (req, res, next) => {
   const {
     name,
     designation,
-    category,
     specialization,
     description,
     experienceYears,
-    status,
   } = req.body;
 
   // Check required text fields
   if (
     !name?.trim() ||
     !designation?.trim() ||
-    !category?.trim() ||
     !specialization?.trim() ||
     !description?.trim() ||
     experienceYears === undefined ||
@@ -38,15 +35,15 @@ const createTrainerValidator = (req, res, next) => {
   }
 
   // Validate optional status
-  if (
-    status !== undefined &&
-    !["draft", "published"].includes(status)
-  ) {
-    return res.status(400).json({
-      success: false,
-      message: "Status must be draft or published",
-    });
-  }
+  // if (
+  //   status !== undefined &&
+  //   !["draft", "published"].includes(status)
+  // ) {
+  //   return res.status(400).json({
+  //     success: false,
+  //     message: "Status must be draft or published",
+  //   });
+  // }
 
   // Make the converted number available to the controller
   req.body.experienceYears = years;

@@ -24,13 +24,6 @@ const trainerSchema = new mongoose.Schema(
       default: null,
     },
 
-    // Shown in the hover section
-    category: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
     specialization: {
       type: String,
       required: true,
@@ -47,11 +40,6 @@ const trainerSchema = new mongoose.Schema(
       type: Number,
       required: true,
       min: 0,
-    },
-
-    detailsUrl: {
-      type: String,
-      default: null,
     }
   },
   {
