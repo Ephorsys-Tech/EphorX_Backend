@@ -12,7 +12,11 @@ const app = express();
 const allowedOrigins = [
     "http://localhost:5173",
     "http://localhost:4173",
-    "https://ephor-x-frontend.vercel.app",
+
+    // Production Frontend
+    "https://ephorx.com",
+    "https://www.ephorx.com",
+
 ];
 
 app.use(
