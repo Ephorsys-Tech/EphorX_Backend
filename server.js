@@ -22,9 +22,14 @@ export const io = new Server(server, {
     cors: {
         origin: [
             "http://localhost:5173",
-            "https://ephor-x-frontend.vercel.app",
+            "http://localhost:4173",
+
+            // Production Frontend
+            "https://ephorx.com",
+            "https://www.ephorx.com",
         ],
         credentials: true,
+        methods: ["GET", "POST"],
     },
 });
 
