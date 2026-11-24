@@ -85,19 +85,17 @@ const updateCourseValidator = async (req, res, next) => {
     }
 
     // Validate description
-    if (description !== undefined) {
-      if (
-        typeof description !== "string" ||
-        !description.trim() ||
-        description.trim().length > 200
-      ) {
-        return res.status(400).json({
-          success: false,
-          message:
-            "Description must be a non-empty string of at most 200 characters.",
-        });
-      }
-    }
+if (description !== undefined) {
+  if (
+    typeof description !== "string" ||
+    !description.trim()
+  ) {
+    return res.status(400).json({
+      success: false,
+      message: "Description must be a non-empty string.",
+    });
+  }
+}
 
     // Validate type
     if (type !== undefined) {

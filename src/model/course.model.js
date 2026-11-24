@@ -11,7 +11,6 @@ const courseSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
-      trim: true,
     },
     type: {
       type: String,
@@ -43,22 +42,22 @@ const courseSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    Originalprice:{
-      type:String,
-      default:"",
-      required:true
+    Originalprice: {
+      type: String,
+      default: "",
+      required: true
     },
 
-    discountPrice:{
-      type:String,
-      default:"",
-      required:true
+    discountPrice: {
+      type: String,
+      default: "",
+      required: true
     },
 
-    duration:{
-      type:String,
-      default:"",
-      required:true
+    duration: {
+      type: String,
+      default: "",
+      required: true
     }
 
   },
