@@ -3,6 +3,7 @@ import Admin from "../model/admin.model.js";
 
 export const authMiddleware = async (req, res, next) => {
     try {
+        // Get token from HTTP-only cookie
         const token = req.cookies?.token;
 
         if (!token) {
@@ -11,9 +12,16 @@ export const authMiddleware = async (req, res, next) => {
             });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        // Verify JWT
+        const decoded = jwt.verify(
+            token,
+            process.env.JWT_SECRET
+        );
 
-        const admin = await Admin.findById(decoded.id).select("_id email");
+        // Find admin
+        const admin = await Admin.findById(decoded.id).select(
+            "_id email"
+        );
 
         if (!admin) {
             return res.status(401).json({
@@ -21,16 +29,14 @@ export const authMiddleware = async (req, res, next) => {
             });
         }
 
+        // Attach admin to request
         req.admin = admin;
 
         next();
-    } catch {
+
+    } catch (error) {
         return res.status(401).json({
             message: "Invalid or expired token",
         });
     }
 };
-
-
-
-

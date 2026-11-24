@@ -1,3 +1,4 @@
+
 import loginService from "../../services/adminServices/loginAdmin.service.js";
 
 const adminLogin = async (req, res) => {
@@ -34,8 +35,9 @@ const adminLogin = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Login successful.",
-      user: admin,
+      admin,
     });
+
   } catch (error) {
     if (error.statusCode) {
       return res.status(error.statusCode).json({

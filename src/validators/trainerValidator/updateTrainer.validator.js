@@ -2,11 +2,9 @@ const updateTrainerValidator = (req, res, next) => {
   const allowedFields = [
     "name",
     "designation",
-    "category",
     "specialization",
     "description",
     "experienceYears",
-    "detailsUrl",
   ];
 
   const updates = Object.keys(req.body || {});
@@ -32,10 +30,8 @@ const updateTrainerValidator = (req, res, next) => {
   const stringFields = [
     "name",
     "designation",
-    "category",
     "specialization",
     "description",
-    "detailsUrl",
   ];
 
   for (const field of stringFields) {
